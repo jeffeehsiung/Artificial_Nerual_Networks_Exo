@@ -59,6 +59,7 @@ The impact of noise can be quantified by listing a selection of noise, calculati
    - Description: Track the training and validation loss over epochs. An increasing gap between training and validation loss might indicate overfitting, which can be exacerbated by noise.
    - Quantification: Calculate the difference or ratio between training and validation loss. A larger difference suggests that noise may be negatively impacting generalization.
    - **Results**:
+
    |     | Training error | Residual | Lowest loss | Best epoch | SNR [dB]  |
    |-----|----------------|----------|-------------|------------|-----------|
    | 0.1 | 0.006351       | 0.006351 | 0.006352    | 1999       | 12.424053 |
@@ -254,11 +255,12 @@ The splitting should be done randomly to ensure that both datasets are represent
 1. **Explain the Point of Having Different Datasets for Training and Testing**: This is important to evaluate the generalization capability of the model. The training dataset is used to fit the model, i.e., to allow the model to learn the underlying patterns in the data. The testing dataset, which consists of unseen data, is used to assess how well the model performs on data it hasn't encountered before. If you only used a single dataset for both training and testing, you wouldn't be able to tell if the model had simply memorized the data (overfitting) or if it had learned to generalize from the patterns it had seen during training.
 
 2. **Plot the Surface Associated to the Training Set**: Once the `T_new` target is constructed using your student number as weights for the different functions, you can plot the surface associated with the training set. This plot will visualize the new function that your neural network will try to approximate.
-<p align="center">
-  <img src="training_set_triSurface.png" width="300" height="200">
-  <br>
-  <em>Figure: Surface associated to the Training Set.</em>
-</p>
+
+   <p align="center">
+   <img src="training_set_triSurface.png" width="300" height="200">
+   <br>
+   <em>Figure: Surface associated to the Training Set.</em>
+   </p>
 
 ### Q2: The Neural Network Architecture Hyperparameters Tuning
 Build and train your feedforward neural network. To that end, you must perform an adequate model selection on the training set. Investigate carefully the architecture of your model: number of layers, number of neurons, learning algorithm and transfer function. How do you validate your model ?
@@ -274,16 +276,64 @@ In practice, you may want to use more sophisticated techniques and libraries des
 
 2. **Validation**: To validate the model, you can use a separate validation set (distinct from the training and testing sets) to assess the model's performance during training. This can help you monitor for overfitting and ensure that the model generalizes well to unseen data. Additionally, you can use techniques like cross-validation to assess the model's performance across different subsets of the training data.
 
+#### Experimental Result
+A set of hyperparameters was created for model selection, using the validation set as a basis. The model with the lowest validation loss was selected as the best model.
+
+   | Hyperparameter      | Options          |
+   |---------------------|------------------|
+   | Number of layers    | 1, 2, 3          |
+   | Units per layer     | 3, 10, 20        |
+   | Activation function | tanh, relu       |
+   | Learning rate       | 0.01, 0.001, 0.0001 |
+
+**The best model is found as follows:**
+
+   | Best Model Parameters | Value                  |
+   |-----------------------|------------------------|
+   | Layers                | 3                      |
+   | Units                 | 20                     |
+   | Activation            | tanh                   |
+   | Learning Rate         | 0.01                   |
+   | Validation Loss       | 0.002038267906755209   |
+   | Training Error        | 0.0024579891469329596  |
+   | Validation Error      | 0.002038267906755209   |
+
+   <p align="center">
+   <img src="training_validation_loss_curve.png" width="300" height="200">
+   <br>
+   <em>Figure: Training and validation loss curve.</em>
+   </p>
+
+
 ### Q3: The Neural Network Training and Testing
 Evaluate the performance of your selected network on the test set. Plot the surface of the test set and the approximation given by the network. Explain why you cannot train further. Give the final MSE on the test set.
 
-1. **Performance Evaluation**: After training the selected network on the training set, you can evaluate its performance on the test set. This involves using the trained model to make predictions on the test set and comparing those predictions to the true target values. Common metrics for regression tasks include Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared.
+1. **Performance Evaluation**: 
+Prediction on test set gives the Final Mean Squared Error (MSE) on the test set as a quantitative measure of the model's performance.
 
-2. **Surface Plot and Approximation**: Plot the surface of the test set and the approximation given by the network. This visual comparison can provide insights into how well the model captures the underlying patterns in the data.
+   | Metric | Value |
+   |--------|-------|
+   | MSE    | 0.23111077279740277 |
 
-3. **Training Limitations**: Explain why you cannot train further. This could be due to reaching a satisfactory level of performance, avoiding overfitting, or computational constraints.
+2. **Surface Plot and Approximation**: 
+   The test set surface and the approximation given by the network is visualized as follows:
+      <p align="center">
+      <img src="test_set_triSurface.png" width="300" height="200">
+      <br>
+      <em>Figure: Surface of the test set and the approximation given by the network.</em>
+      </p>
+   The delta between prediction and actual value is visualized as follows:
+      <p align="center">
+      <img src="delta_surface.png" width="300" height="200">
+      <br>
+      <em>Figure: Delta between prediction and actual value.</em>
+      </p>
 
-4. **Final MSE**: Provide the final Mean Squared Error (MSE) on the test set as a quantitative measure of the model's performance.
+3. **Training Limitations**: 
+- The best model has 2 hidden layers, 20 units in each layer, relu activation, and 0.01 learning rate.
+- The model has a low training, along with the lowest validation error. Additionally, from the test result, it shows that the test error is also low.
+- The model has a good generalization performance and cannot train further. If training further, despite lowered training error, the validation error would likely increase, indicating overfitting.
+
 
 ### Q4: The Neural Network Regularization Strategies
 Describe the regularization strategy that you used to avoid overfitting. What other strategy can you think of ?
