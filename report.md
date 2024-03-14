@@ -259,3 +259,36 @@ The splitting should be done randomly to ensure that both datasets are represent
   <br>
   <em>Figure: Surface associated to the Training Set.</em>
 </p>
+
+### Q2: The Neural Network Architecture Hyperparameters Tuning
+Build and train your feedforward neural network. To that end, you must perform an adequate model selection on the training set. Investigate carefully the architecture of your model: number of layers, number of neurons, learning algorithm and transfer function. How do you validate your model ?
+
+systematically explore a range of different model architectures, learning rates, and other hyperparameters to find the best performing model on your validation set. 
+
+1. **Model Selection**: The model selection process involves experimenting with different hyperparameters to find the combination that yields the best performance on the training set. This includes:
+   - **Number of Layers**: Experiment with different numbers of hidden layers and units in each layer to find the architecture that best captures the underlying patterns in the data.
+   - **Learning Algorithm**: Try different optimization algorithms (e.g., SGD, Adam, RMSProp) and learning rates to find the one that converges most effectively.
+   - **Transfer Function**: Experiment with different activation functions (e.g., ReLU, Sigmoid, Tanh) to find the one that best captures the non-linear relationships in the data.
+
+In practice, you may want to use more sophisticated techniques and libraries designed for hyperparameter optimization, like `keras-tuner` or `scikit-learn`'s `GridSearchCV` for larger spaces of parameters.
+
+2. **Validation**: To validate the model, you can use a separate validation set (distinct from the training and testing sets) to assess the model's performance during training. This can help you monitor for overfitting and ensure that the model generalizes well to unseen data. Additionally, you can use techniques like cross-validation to assess the model's performance across different subsets of the training data.
+
+### Q3: The Neural Network Training and Testing
+Evaluate the performance of your selected network on the test set. Plot the surface of the test set and the approximation given by the network. Explain why you cannot train further. Give the final MSE on the test set.
+
+1. **Performance Evaluation**: After training the selected network on the training set, you can evaluate its performance on the test set. This involves using the trained model to make predictions on the test set and comparing those predictions to the true target values. Common metrics for regression tasks include Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared.
+
+2. **Surface Plot and Approximation**: Plot the surface of the test set and the approximation given by the network. This visual comparison can provide insights into how well the model captures the underlying patterns in the data.
+
+3. **Training Limitations**: Explain why you cannot train further. This could be due to reaching a satisfactory level of performance, avoiding overfitting, or computational constraints.
+
+4. **Final MSE**: Provide the final Mean Squared Error (MSE) on the test set as a quantitative measure of the model's performance.
+
+### Q4: The Neural Network Regularization Strategies
+Describe the regularization strategy that you used to avoid overfitting. What other strategy can you think of ?
+
+1. **Regularization Strategy**: Regularization techniques like L1 and L2 regularization, dropout, and early stopping can be used to avoid overfitting. Describe the specific regularization strategy you used and how it helped improve the model's generalization performance.
+
+2. **Other Strategies**: Discuss other strategies that can be used to avoid overfitting, such as data augmentation, batch normalization, and model ensembling.
+
