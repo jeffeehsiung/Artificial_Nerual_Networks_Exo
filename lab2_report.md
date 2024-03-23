@@ -103,3 +103,51 @@
     - **Existence of Spurious States**: The appearance of states not directly matching the targets, especially in symmetric simulations, points to the existence of spurious states or mixed states due to the complex interplay of attractors in the network's configuration space.
 
     In practical terms, these results illustrate the Hopfield network's capabilities and limitations as a content-addressable memory system, its sensitivity to initial states, and the influence of the network's structure on its dynamic behavior.
+
+### Q3.Create a higher dimensional Hopfield network which has as attractors the handwritten digits from 0 to 9. Test the ability of the network to correctly retrieve these patterns when some noisy digits are given as input to the network. Try to answer the below questions by playing with these two parameters:
+- noise level represents the level of noise that will corrupt the digits and is a positive number. 
+- num iter is the number of iterations the Hopfield network (having as input the noisy digits) will run.
+1. **Is the Hopfield model always able to reconstruct the noisy digits? If not why? What is the influence of the noise on the number of iterations?**
+
+    | Noise Level | Accuracy (%) |
+    |-------------|--------------|
+    | 0.0         | 100.0        |
+    | 0.1         | 100.0        |
+    | 0.2         | 100.0        |
+    | 0.3         | 100.0        |
+    | 0.4         | 100.0        |
+    | ...         | ...          |
+    | 9.6         | 50.0         |
+    | 9.7         | 30.0         |
+    | 9.8         | 80.0         |
+    | 9.9         | 30.0         |
+    | 10.0        | 40.0         |
+
+    <p align="center">
+    <img src="digits_hopfield.png" width="300" height="200">
+    <br>
+    <em>Figure: Hopfield digit reconstruction with noise.</em>
+    </p>
+
+    - **Hopfield Model's Reconstruction Ability**:
+        - The Hopfield model is not always able to reconstruct the noisy digits perfectly due to the presence of spurious states and the network's energy landscape. The influence of noise on the number of iterations is significant, as higher noise levels can lead to longer convergence times or even prevent the network from reaching the correct attractor.
+        - **Effect of Noise on Reconstruction**: 
+            - Low noise levels may allow the network to converge to the correct attractor with minimal distortion. However, as the noise level increases, the network may struggle to recover the original pattern due to the interference caused by the noisy inputs.
+            - The network may converge to a spurious state or a mixed state that is a combination of the original pattern and the noise, especially when the noise level is high.
+        - **Influence of Noise on Convergence Time**:
+            - Higher noise levels can lead to longer convergence times as the network needs more iterations to overcome the noise and reach the correct attractor.
+            - The network may get stuck in local minima or oscillate between states when the noise level is high, resulting in prolonged convergence times or failure to converge.
+        - **Trade-off between Noise and Convergence**:
+            - There is a trade-off between the noise level and the convergence time. Higher noise levels can make it more challenging for the network to reconstruct the original pattern, leading to longer convergence times or convergence to incorrect states.
+            - The network's ability to reconstruct the noisy digits depends on the noise level, the network's architecture, and the specific attractors present in the network.
+
+    - The Hopfield model is not always able to reconstruct the noisy digits perfectly due to the presence of spurious states and the network's energy landscape. The influence of noise on the number of iterations is significant, as higher noise levels can lead to longer convergence times or even prevent the network from reaching the correct attractor.
+    - **Effect of Noise on Reconstruction**: 
+        - Low noise levels may allow the network to converge to the correct attractor with minimal distortion. However, as the noise level increases, the network may struggle to recover the original pattern due to the interference caused by the noisy inputs.
+        - The network may converge to a spurious state or a mixed state that is a combination of the original pattern and the noise, especially when the noise level is high.
+    - **Influence of Noise on Convergence Time**:
+        - Higher noise levels can lead to longer convergence times as the network needs more iterations to overcome the noise and reach the correct attractor.
+        - The network may get stuck in local minima or oscillate between states when the noise level is high, resulting in prolonged convergence times or failure to converge.
+    - **Trade-off between Noise and Convergence**:
+        - There is a trade-off between the noise level and the convergence time. Higher noise levels can make it more challenging for the network to reconstruct the original pattern, leading to longer convergence times or convergence to incorrect states.
+        - The network's ability to reconstruct the noisy digits depends on the noise level, the network's architecture, and the specific attractors present in the network.
