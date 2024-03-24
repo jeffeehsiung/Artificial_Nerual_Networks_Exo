@@ -286,8 +286,9 @@
 ### Q2. Do the same for the LSTM model and explain the design process. What is the effect of changing the lag value for the LSTM network?
 The LSTM model was implemented to predict the Santa Fe Laser dataset, and the design process involved configuring the model architecture, hyperparameters, and training settings. The impact of changing the lag value on the LSTM network was explored to understand how historical context influences prediction performance.
 
-erformance on the validation set is achieved with lag=15, H=25: MSE = 0.110
-The MSE on the test set is: 3410.111
+- Performance on the validation set is achieved with:
+    - Lag being 15 and H being 25 performs better on the cross-validatoin set among the lag set of 1, 5, 10, 15 and number of hiddent units set of 5, 10, 25, 50, with MSE on cross-valdiation being the lowest, 0.110.
+    - Lag being 15 and H being 25, the MSE on the test set is: 3410.111
         <p align="center">
         <img src="lstm_prediction.png" width="400" height="150">
         <br>
@@ -295,3 +296,21 @@ The MSE on the test set is: 3410.111
         </p>
 
 ### Q3. Compare the results of the recurrent MLP with the LSTM. Which model do you prefer and why?
+Both the LSTM and MLP models have been used to predict the continuation of a time series from the Santa Fe laser dataset with the same lag of 15 and number of hidden units at 25.
+
+In comparing the two:
+
+1. **LSTM Results**: The LSTM model appears to track the test data more closely. The peaks and troughs of the predicted values (orange line) follow the test data (blue line) with a higher degree of accuracy, particularly in capturing the rhythm and magnitude of the test data's oscillations.
+
+2. **MLP Results**: The MLP model also captures the overall trend but seems to struggle with the finer details of the test data's fluctuations. It fails to predict the peaks and troughs accurately after about timestep 1060, deviating significantly from the test data.
+
+**Preference**:
+Based on the visual comparison, the LSTM model would be preferred for the following reasons:
+
+- **Temporal Dependencies**: LSTMs are specifically designed to handle sequences with long-term dependencies. The LSTM seems to be leveraging its recurrent connections to better remember and predict the sequence of the laser intensity.
+
+- **Prediction Accuracy**: The LSTM's predictions are closer to the test data, suggesting that it is better at generalizing from the training data to predict unseen sequences.
+
+- **Stability**: After timestep 1060, the MLP predictions become erratic and unstable, whereas the LSTM maintains a consistent prediction pattern throughout the entire sequence.
+
+In time series prediction tasks, especially with complex patterns and potential long-term dependencies, LSTMs often outperform traditional MLPs due to their recurrent structure. However, it's also important to consider factors such as training time, computational resources, and the specific characteristics of the dataset when choosing between the two models for practical applications.
