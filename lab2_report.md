@@ -297,7 +297,11 @@ The LSTM model was implemented to predict the Santa Fe Laser dataset, and the de
 
 ### Q3. Compare the results of the recurrent MLP with the LSTM. Which model do you prefer and why?
 Both the LSTM and MLP models have been used to predict the continuation of a time series from the Santa Fe laser dataset with the same lag of 15 and number of hidden units at 25.
-
+        <p align="center">
+        <img src="lstm_vs_mlp.png" width="400" height="150">
+        <br>
+        <em>Figure: Lag=15 H=25 LSTM vs. MLP prediction results on continuation of Santa Fe laser datase .</em>
+        </p>
 In comparing the two:
 
 1. **LSTM Results**: The LSTM model appears to track the test data more closely. The peaks and troughs of the predicted values (orange line) follow the test data (blue line) with a higher degree of accuracy, particularly in capturing the rhythm and magnitude of the test data's oscillations.
