@@ -276,7 +276,7 @@
         <br>
         <em>Figure: MLP Lag=15 H=25 prediction results on continuation of Santa Fe laser datase .</em>
         </p>
-    - **Lag 15 H 50: The MSE on the test set is: 3589.835**
+    - **Lag 15 H 50: The MSE on the test set is: 6488.547**
         <p align="center">
         <img src="predictoin_lag15_h50.png" width="400" height="150">
         <br>
@@ -285,5 +285,13 @@
 
 ### Q2. Do the same for the LSTM model and explain the design process. What is the effect of changing the lag value for the LSTM network?
 The LSTM model was implemented to predict the Santa Fe Laser dataset, and the design process involved configuring the model architecture, hyperparameters, and training settings. The impact of changing the lag value on the LSTM network was explored to understand how historical context influences prediction performance.
+
+erformance on the validation set is achieved with lag=15, H=25: MSE = 0.110
+The MSE on the test set is: 3410.111
+        <p align="center">
+        <img src="lstm_prediction.png" width="400" height="150">
+        <br>
+        <em>Figure: LSTM Lag=15 H=25 prediction results on continuation of Santa Fe laser datase .</em>
+        </p>
 
 ### Q3. Compare the results of the recurrent MLP with the LSTM. Which model do you prefer and why?
