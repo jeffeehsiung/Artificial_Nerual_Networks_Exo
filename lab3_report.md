@@ -5,3 +5,38 @@
 ## Section 3.1: Autoencoders and Stacked Autoencoders
 
 ### Q1. Conduct image reconstruction on synthetic handwritten digits dataset (MNIST) using an autoencoder. Note that you can tune the number of neurons in the hidden layer (encoding dim) of the autoencoder and the number of training epochs (n epochs) so as to obtain good reconstruction results. Can you improve the performance of the given model?.
+
+Using a separate validation set for parameter tuning and reserving the test set for final evaluation ensures an unbiased performance measure on unseen data. In the process, training data is split into a new training set (80%) and a validation set (20%), with the latter used for hyperparameter tuning. The model undergoes training on this adjusted training set, validation against the validation set, and is ultimately evaluated on the test set to assess its generalization capability.
+
+### Q2. Conduct image classification on MNIST using an stacked autoencoder. Are you able to obtain a better result by changing the size of the network architecture? What are the results before and after fine-tuning? What is the benefit of pretraining the network layer by layer?
+
+## Section 3.2: Convolutional Neural Networks
+### Q1. Answer the following questions: Consider the following 2D input matrix.
+    
+    ```
+    X = [
+        [2, 5, 4, 1],
+        [3, 1, 2, 0],
+        [4, 5, 7, 1],
+        [1, 2, 3, 4]
+        ]
+    ```
+#### Q1.1. Calculate the output of a convolution with the following 2x2 kernel with no padding and a stride of 2.
+    
+        ```
+        K = [
+            [1, 0],
+            [0, 1]
+            ]
+        ```
+
+#### Q1.2. How do you in general determine the dimensionality of the output of a convolutional layer?
+
+#### Q1.3. What benefits do CNNs have over regular fully connected networks?
+
+### Q2. The file cnn.ipynb runs a small CNN on the handwritten digits dataset (MNIST). Use this script to investigate some CNN architectures. Try out different amounts of layers, combinations of different kinds of layers, number of filters and kernel sizes. Note that emphasis is not on experimenting with batch size or epochs, but on parameters specific to CNNs. Pay close attention when adjusting the parameters for a convolutional layer as the dimensions of the input and output between layers must align. Discuss your results. Please remember that some architectures will take a long time to train.
+
+## Section 3.3: Self-Attention and Transformers
+### Q1. Please run both the NumPy and PyTorch implementations of the self-attention mechanism. Can you explain briefly how the dimensions between the queries, keys and values, attention scores and attention outputs are related? What do the query, key and value vectors represent? Note that the attention mechanism will also be discussed in lecture 11.
+
+### Q2. Please train the Transformer on the MNIST dataset. You can try to change the architecture by tuning dim, depth, heads, mlp dim for better results. You can try to increase or decrease the network size and see whether it will influence the prediction results much. Note that ViT can easily overfit on small datasets due to its large capacity. Discuss your results under different architecture sizes.
