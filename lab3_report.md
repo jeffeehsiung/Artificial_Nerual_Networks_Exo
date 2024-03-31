@@ -29,8 +29,61 @@ Using a separate validation set for parameter tuning and reserving the test set 
             [0, 1]
             ]
         ```
+- The output matrix is a 1x1 matrix with the value 1. To answer Q1.1, let's perform the convolution operation using the given input matrix $X$ and kernel $K$, with no padding and a stride of 2. Convolution involves sliding the kernel over the input matrix, computing the element-wise product of the kernel and the part of the input it covers at each step, and summing up these products to produce a single output value for each position the kernel can fit. The stride determines how many positions we move the kernel each time, and no padding means we don't add any borders to the input matrix.
+
+Given $X$ and $K$:
+
+$X = \begin{bmatrix} 2 & 5 & 4 & 1 \\ 3 & 1 & 2 & 0 \\ 4 & 5 & 7 & 1 \\ 1 & 2 & 3 & 4 \end{bmatrix}$
+
+$K = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$
+
+With a stride of 2 and no padding, we will calculate the convolutional operation for each applicable position of $K$ over $X$.
+
+For Q1.2, the dimensionality of the output of a convolutional layer can be determined by the formula:
+
+$O = \frac{W - K + 2P}{S} + 1$
+
+where:
+- $O$ is the output size (height/width),
+- $W$ is the input size (height/width),
+- $K$ is the kernel size (height/width),
+- $P$ is the padding on each side (total padding divided by 2 if it's uniform),
+- $S$ is the stride.
+
+This formula calculates the size of one dimension (height or width), and you would use the respective sizes for $W$, $K$, and $P$ for height and width to calculate each dimension of the output separately.
+
+Let's perform the convolution operation for Q1.1 and then discuss the dimensionality further with the formula in mind.
+
+For Q1.1, the output of the convolution operation with the given 2x2 kernel, no padding, and a stride of 2 on the input matrix is:
+
+$
+\begin{bmatrix}
+3 & 4 \\
+6 & 11
+\end{bmatrix}
+$
 
 #### Q1.2. How do you in general determine the dimensionality of the output of a convolutional layer?
+Regarding Q1.2, the general formula to determine the dimensionality of the output of a convolutional layer is given by:
+
+$
+O = \frac{W - K + 2P}{S} + 1
+$
+
+where $O$ is the output size for one dimension (height or width), $W$ is the input size for the same dimension, $K$ is the kernel size (assuming square kernels for simplicity), $P$ is the padding applied on each side of the input in that dimension, and $S$ is the stride of the convolution.
+
+$O = \frac{4 - 2 + 2\cdot 0}{2} + 1 = 2$
+
+Therefore, the output matrix is a 2x2 matrix with the values:
+
+$
+\begin{bmatrix}
+3 & 4 \\
+6 & 11
+\end{bmatrix}
+$
+
+In the specific case of the convolution we just calculated, with no padding ($P=0$) and a stride of 2, the formula simplifies to just considering the input size, kernel size, and stride. Padding wasn't a factor here, but it plays a crucial role in many convolutional neural network designs to control the output size and preserve spatial dimensions through layers.
 
 #### Q1.3. What benefits do CNNs have over regular fully connected networks?
 
