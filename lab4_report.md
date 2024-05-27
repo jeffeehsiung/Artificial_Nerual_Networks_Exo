@@ -9,13 +9,11 @@
 #### Q1. In the restricted Boltzmann machine (RBM) script, the training algorithm refers to the pseudo-likelihood. Why is that? What is the consequence regarding the training of the model?
 
 1. **Intractable Likelihood Calculation**:
-   - **Problem**: The goal of RBM training is to maximize the log-likelihood of the training data, ahcieved by learning over the gradient of the log-likelihood, or logrithmic of joint distribution $P_{model}(v, h; \theta)$. 
-   
-   The exact maximum log-likelihood, characterized by an energy function $ E(v, h; \theta) = -v^TWh - b^Tv - a^Th $ defining the joint configuration of visible units $ v $ and hidden units $ h $ and a partition function $ Z(\theta) = \sum_v \sum_h \exp(-E(v, h; \theta)) $ denoting the sum of the exponentiated negative energies over all possible configurations of the visible and hidden units, involves calculating the derivatives of the logrithmic of joint distribution $P_{model}(v, h; \theta) = \frac{1}{Z(\theta)} \exp(-E(v, h; \theta)) $ that is interperted as the expectation difference between data-dependent expection with respect to data distribution $P_{data}(h, v; \theta)$ and model's expectation $P_{model}(v, h; \theta)$. 
-   
-   However, this exact maximum likelihood learning is intractable for large models owing the exponentially growing number of terms.
-   
-   - **Solution**: To circumvent this, the Contrastive Divergence (CD) algorithm with conditional distributions, or conditional probabilities, factorized as
+    - The goal of RBM training is to maximize the log-likelihood of the training data, ahcieved by learning over the gradient of the log-likelihood, or logrithmic of joint distribution $P_{model}(v, h; \theta)$. 
+    - The exact maximum log-likelihood, characterized by an energy function $ E(v, h; \theta) = -v^TWh - b^Tv - a^Th $ defining the joint configuration of visible units $ v $ and hidden units $ h $ and a partition function $ Z(\theta) = \sum_v \sum_h \exp(-E(v, h; \theta)) $ denoting the sum of the exponentiated negative energies over all possible configurations of the visible and hidden units, involves calculating the derivatives of the logrithmic of joint distribution $P_{model}(v, h; \theta) = \frac{1}{Z(\theta)} \exp(-E(v, h; \theta)) $ that is interperted as the expectation difference between data-dependent expection with respect to data distribution $P_{data}(h, v; \theta)$ and model's expectation $P_{model}(v, h; \theta)$. 
+    - However, this exact maximum likelihood learning is intractable for large models owing the exponentially growing number of terms.
+2. **Solution**: 
+    - To circumvent this, the Contrastive Divergence (CD) algorithm with conditional distributions, or conditional probabilities, factorized as
       $
       P(h|v; \theta) = \prod_j p(h_j|v)
       $
@@ -27,14 +25,13 @@
     \Delta W = \alpha (E_{P_{data}}[vh^T] - E_{P_T}[vh^T])
     $
     where $ P_T $ is the distribution obtained after running a Gibbs sampler for $ T $ steps.
-    
-    This alternative objective function, known as the pseudo-likelihood, is used to approximate the log-likelihood of the data, and is defined as
+    - This alternative objective function, known as the pseudo-likelihood, is used to approximate the log-likelihood of the data, and is defined as
     $
     \log P(v_i|v_{-i}; \theta) = \sum_i \log P(v_i|v_{-i}; \theta)
     $
     where $ v_{-i} $ denotes the visible units excluding the $ i $-th unit.
     
-    - **Consequence**: The pseudo-likelihood training algorithm simplifies the computation of the log-likelihood, avoiding the intractable calculation of the partition function $ Z(\theta) $, and focuses on the local dependencies between the visible units, rather than the global structure of the data. This allows for more efficient training, but at the cost of an approximation that might not capture all dependencies in the data as accurately as the true likelihood.
+    - The pseudo-likelihood training algorithm simplifies the computation of the log-likelihood, avoiding the intractable calculation of the partition function $ Z(\theta) $, and focuses on the local dependencies between the visible units, rather than the global structure of the data. This allows for more efficient training, but at the cost of an approximation that might not capture all dependencies in the data as accurately as the true likelihood.
 
 ### Q2. What is the role of the number of components, learning rate and and number of iterations on the performance? You can also evaluate the effect it visually by reconstructing unseen test images.
 
@@ -89,7 +86,6 @@ The reconstruction results are less likely to be affected if the removed section
 
 ### Q2. Sample new images from the DBM. Is the quality better than the RBM from the previous exercise? Explain. 
 
-### Interpretation of Results:
 
 
 ## Section 4.2: Generator and Discriminator in the RING: Generative Adversarial Ntworks (GANs)
