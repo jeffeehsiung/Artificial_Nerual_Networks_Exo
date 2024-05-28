@@ -274,11 +274,58 @@ Conversely, autoencoders, such as Variational Autoencoders (VAEs), characterized
 
 In the context of Diffuesion Models that generate data by reversing a diffusion process and gradually transforming noise into data samples, the series of iterative steps nature in the generation process, while promising in higher-fidelity which often surpass performance of GANs, require extensive computational resources and time for training. 
 
+According to Prince 2023, "Generative models based on latent variables should habe the following properties: (1) Efficient sampling in terms of computationally inexpensive, (2) High-quality sampling in terms of indistinguishable from the real data, (3) Representative coverage in terms of sufficent coverage of the data distribution that the generated samples resembles a subset of the training samples, (4) Well-behaved latent space in terms of the latent space being continuous and interpretable, and (5) Disentagled latent space in terms of manipulation of the latent variables resulting in semantically meaningful and interpretable changes in the generated samples." The statment conlcudes the comparison of GANs, VAEs, and Diffusion Models, as demonstrated in the following table:
+
+| Model      | Efficient | Sample Quality | Coverage | Well-behaved Latent Space | Disentangled Latent Space | Efficient Likelihood |
+|------------|-----------|----------------|----------|---------------------------|---------------------------|----------------------|
+| GANs       | ✓         | ✓              | ✗        | ✓                         | ?                         | n/a                  |
+| VAEs       | ✓         | ✗              | ?        | ✓                         | ?                         | ✗                    |
+| Flows      | ✓         | ✗              | ?        | ✓                         | ?                         | ✓                    |
+| Diffusion  | ✗         | ✓              | ?        | ✗                         | ✗                         | ✗                    |
+
 ## Section 4.3: An Auto-Encoder with a Touch: Variational Auto-Encoders (VAEs)
 ### Q1. In practice, the model does not maximize the log-likelihood but another metric. Which one? Why is that and how does it work?
 
+Variational Autoencoders (VAEs), instead of maximizing the log-likelihood which is computationally intractable for complex models, capatalize on parameterizing the variational distributions (latent variables) and approzimating which using Jensen's inequlaity: 
+
+$ \ln p(x) = \ln \int p(x|z)p(z)dz \geq \mathbb{E}_{z \sim q_\phi(z|x)} \left[ \ln \frac{p(x|z)p(z)}{q_\phi(z|x)} \right] $
+
+Consifering an amortized variational posterior $ q_\phi(z|x) $ for each $x$, the VAE model maximizes the Evidence Lower Bound (ELBO) instead of the log-likelihood, which is defined as:
+
+$ \ln p(x) \geq \text{ELBO} = \mathbb{E}_{z \sim q_\phi(z|x)}[\ln p(x|z)] - \mathbb{E}_{z \sim q_\phi(z|x)}(\ln q_\phi(z|x) - \ln p(z)) $
+
+Where:
+- $\mathbb{E}_{z \sim q_\phi(z|x)}[\ln p(x|z)]$ is the expected log-likelihood of the data given the latent variables, corresponding to the reconstruction error term measuring the model's ability to reconstruct the input data.
+- $\mathbb{E}_{z \sim q_\phi(z|x)}(\ln q_\phi(z|x) - \ln p(z))$ is the Kullback-Leibler (KL) divergence $\text{KL}(q_\phi(z|x) \| p(z))$ between the approximate posterior $q_\phi(z|x)$ and the prior $p(z)$, acting as a regularization term ensuring the approximate posterior is close to the prior.
+
+The lower bound of the log-likelihood is refered to as Evidence Lower Bound (ELBO), which is maximized during training. The ELBO balances the reconstruction error and the regularization term, facilitating an accurate representation of the latent space while stimulating a generalized model construction. 
+
+In implementation, the $q_\phi(z|x)$ can be reparameterized by sampling from a common distribution such as a Gaussian distribution, characterized by $\mu_\phi$ mean and $\sigma_\phi$ standard deviation, enabling the backpropagation of gradients in stochastic gradient descent training for ELBO maximization.
+
 ### Q2. In particular, what similarities and differences do you see when compared with stacked auto-encoder from the previous assignment? What is the metric for the reconstruction error in each case?
+
+Both VAEs and stacked autoencoders use an encoder-decoder architecture where the encoder maps input data to a lower-dimensional latent space while the decoder reconstructs the data from this latent space, and that both models aim to minimize the reconstruction error matching the original input. However, there are key differences in the objective functions and the latent space regularization between VAEs and stacked autoencoders.
+**Differences:**
+1. **Latent Space Regularization**: 
+   - **VAE**: Introduces a probabilistic framework where the latent space is defined by a distribution (typically Gaussian). The encoder outputs parameters of this distribution (mean and variance), and the latent variable is sampled from this distribution during training. This introduces regularization through the KL divergence term.
+   - **Stacked Autoencoder**: Uses a deterministic mapping from input to latent space without explicitly enforcing a distribution over the latent variables.
+
+2. **Objective Function**:
+   - **VAE**: Maximizes the ELBO, which includes both the reconstruction error and the KL divergence.
+   - **Stacked Autoencoder**: Minimizes only the reconstruction error without considering a probabilistic interpretation of the latent space.
+
+3. **Reconstruction Error Metric**:
+   - **VAE**: The reconstruction error is part of the ELBO and is measured as the expected log-likelihood of the data given the latent variables: $\mathbb{E}_{z \sim q_\phi(z|x)}[\ln p(x|z)]$. Typically, this is implemented using a mean squared error (MSE) loss for continuous data or a binary cross-entropy loss for binary data.
+   - **Stacked Autoencoder**: The reconstruction error is typically measured using MSE loss for continuous data, without the probabilistic framework.
+
+### Summary:
+- **Metric for VAEs**: The ELBO, which combines reconstruction error and KL divergence, is maximized.
+- **Metric for Stacked Autoencoders**: The reconstruction error (e.g., MSE) is minimized.
+- **Key Difference**: VAEs incorporate a probabilistic approach with latent space regularization through KL divergence, while stacked autoencoders focus solely on reconstructing the input data without probabilistic constraints.
+
+
 ### Q3. Explore the latent space using the provided code and discuss what you observe.
+
 ### Q4. Compare the generation mechanism to GANs. You may optionally want to consider similar backbones for a fair comparison. What are the advantages and disadvantages?
 
 ## Section 4.4: (Optional) Generation and Creativity
