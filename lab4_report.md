@@ -300,7 +300,7 @@ Where:
 
 The lower bound of the log-likelihood is refered to as Evidence Lower Bound (ELBO), which is maximized during training. The ELBO balances the reconstruction error and the regularization term, facilitating an accurate representation of the latent space while stimulating a generalized model construction. 
 
-In implementation, the $q_\phi(z|x)$ can be reparameterized by sampling from a common distribution such as a Gaussian distribution, characterized by $\mu_\phi$ mean and $\sigma_\phi$ standard deviation, enabling the backpropagation of gradients in stochastic gradient descent training for ELBO maximization.
+In implementation, the $q_\phi(z|x)$ can be reparameterized by sampling from a common distribution such as a Gaussian distribution, characterized by $\mu_\phi$ mean, $\sigma_\phi$ standard deviation, and $\sigma^2_\phi$ variance, enabling the backpropagation of gradients in stochastic gradient descent training for ELBO maximization.
 
 ### Q2. In particular, what similarities and differences do you see when compared with stacked auto-encoder from the previous assignment? What is the metric for the reconstruction error in each case?
 
