@@ -212,20 +212,15 @@ The provided GAN implementation includes the following key elements:
 
 #### Empirical Results
 
-The training loss curves for the generator and discriminator show the following trends:
-
-1. **Initial Stages**:
-   - **Epoch 1**: Average loss generator vs. discriminator: 0.829 vs. 0.698
-   - **Epoch 2**: Average loss generator vs. discriminator: 0.956 vs. 0.686
-
-2. **Mid Stages**:
-   - **Epoch 10**: Average loss generator vs. discriminator: 1.36 vs. 0.571
-   - **Epoch 20**: Average loss generator vs. discriminator: 1.99 vs. 0.429
-
-3. **Later Stages**:
-   - **Epoch 30**: Average loss generator vs. discriminator: 2.22 vs. 0.396
-   - **Epoch 50**: Average loss generator vs. discriminator: 2.86 vs. 0.3
-   - **Epoch 70**: Average loss generator vs. discriminator: 3.08 vs. 0.253
+| Stage | Epoch | Average Generator Loss | Average Discriminator Loss |
+|-------|-------|------------------------|----------------------------|
+| Initial | 1 | 0.829 | 0.698 |
+| Initial | 2 | 0.956 | 0.686 |
+| Mid | 10 | 1.36 | 0.571 |
+| Mid | 20 | 1.99 | 0.429 |
+| Later | 30 | 2.22 | 0.396 |
+| Later | 50 | 2.86 | 0.3 |
+| Later | 70 | 3.08 | 0.253 |
 
 In the context of convergence, both the generator and discriminator losses suggest a movement towards equilibrium corresponding to the theoretical expectation $ p_G \approx p_{\text{data}} $. The discriminator's loss decreases, showing improvement in classification, while the generator's loss increases but stabilizes, indicating that the generator is improving in producing realistic samples. Additionally, the smooth progression of both losses as indicated in Fig.4 without significant oscillations or divergence indicates a stable training process. Adjustments to learning rates and regularization techniques contribute to this stability.
 
@@ -247,7 +242,7 @@ Interpolation in latent space, or discussed in the lecture as Traversing the lat
 <p align="center">
 <img src="interpolate_the_latent_sapce.png" width="400" height="100">
 <br>
-<em>Fig.5: Latent vectors interpolation </em>
+<em>Fig.5: Latent vectors interpolation (GANs) </em>
 </p>
 
 Sampling multiple latent vectors, or discussed in the lecture as Sampling from the latent space, was conducted by randomly sampling multiple latent vectors and accordinly generating corresponding fake images. The generated images as illustrated in Fig.6, while showing the ability of generator producing relatively diverse and higher-quality samples and demostrating zero memory dependency on the training set for new image generation, latent code inference limitation of the GAN model constrained by imporsing focused on the models of the real-data distruction is inevitable indicated if compared to Variational Autoencoders (VAEs) or plain Autoencoders, which have an encoder.
@@ -255,7 +250,7 @@ Sampling multiple latent vectors, or discussed in the lecture as Sampling from t
 <p align="center">
 <img src="sample_latent_vector_from_prior_GAN_as_Generator.png" width="300" height="300">
 <br>
-<em>Fig.6: Latent vectors Sampling</em>
+<em>Fig.6: Latent vectors Sampling (GANs)</em>
 </p>
 
 ### Q5. Try the CNN-based backbone and discuss.
@@ -305,33 +300,129 @@ In implementation, the $q_\phi(z|x)$ can be reparameterized by sampling from a c
 ### Q2. In particular, what similarities and differences do you see when compared with stacked auto-encoder from the previous assignment? What is the metric for the reconstruction error in each case?
 
 Both VAEs and stacked autoencoders use an encoder-decoder architecture where the encoder maps input data to a lower-dimensional latent space while the decoder reconstructs the data from this latent space, and that both models aim to minimize the reconstruction error matching the original input. However, there are key differences in the objective functions and the latent space regularization between VAEs and stacked autoencoders.
-**Differences:**
-1. **Latent Space Regularization**: 
-   - **VAE**: Introduces a probabilistic framework where the latent space is defined by a distribution (typically Gaussian). The encoder outputs parameters of this distribution (mean and variance), and the latent variable is sampled from this distribution during training. This introduces regularization through the KL divergence term.
-   - **Stacked Autoencoder**: Uses a deterministic mapping from input to latent space without explicitly enforcing a distribution over the latent variables.
+
+
+| Feature                      | VAE                                                                                 | Stacked Autoencoder                                                         |
+|------------------------------|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| **Architecture**             | Encoder-decoder                                                                    | Encoder-decoder                                                            |
+| **Latent Space Regularization** | Probabilistic framework with latent space defined by a distribution (e.g., Gaussian). Encoder outputs mean and variance, with sampling from this distribution. Regularization via KL divergence. | Deterministic mapping from input to latent space without enforced distribution over latent variables. |
+| **Objective Function**       | Maximizes the Evidence Lower Bound (ELBO):                                          | Minimizes reconstruction error (e.g., Mean Squared Error).                |
+| **Reconstruction Error Metric** | Part of ELBO, measured as expected log-likelihood of data given latent variables: $\mathbb{E}_{z \sim q_\phi(z|x)}[\ln p(x|z)]$. Uses MSE for continuous data or binary cross-entropy for binary data. | Typically uses Mean Squared Error (MSE) loss for continuous data.          |
+| **Mathematical Formula**     | ELBO: $\mathcal{L}(\theta, \phi; x) = \mathbb{E}_{q_\phi(z|x)}[\ln p_\theta(x|z)] - \text{KL}(q_\phi(z|x) \| p(z))$ | Reconstruction Error: $\mathcal{L}(x, \hat{x}) = \| x - \hat{x} \|^2$    |
+
+#### Variational Autoencoders (VAEs):
+The learning algorithm of VAEs is defined as follows: 
+  **Learning algorithm** using the distributions $ q_\phi(z|x) = \mathcal{N}(z|\mu_\phi(x), \sigma^2_\phi(x)) $, $ p(z) = \mathcal{N}(z|0, I) $, $ p_\theta(x|z) = \text{Categorical}(x|\theta(z)) $:
+
+  1. Considering a data set $ D = \{x_n\}_{n=1}^N $, take $ x_n $ and apply the encoder network to get $ \mu_\phi(x_n), \sigma^2_\phi(x_n) $.
+
+  2. Calculate $ z_{\phi,n} = \mu_\phi(x_n) + \sigma_\phi(x_n) \odot \epsilon $, with $ \epsilon \sim \mathcal{N}(\epsilon|0, I) $.
+
+  3. Apply the decoder network to $ z_{\phi,n} $ to get the probabilities $ \theta(z_{\phi,n}) $.
+
+  4. Calculate the ELBO by plugging in $ x_n, z_{\phi,n}, \mu_\phi(x_n), \sigma^2_\phi(x_n) $, maximizing
+
+  $
+  \text{ELBO}(D; \theta, \phi) = \sum_{n=1}^N \left\{ \ln \text{Categorical}(x_n | \theta(z_{\phi,n})) + [\ln \mathcal{N}(z_{\phi,n}|\mu_\phi(x_n), \sigma^2_\phi(x_n)) + \ln \mathcal{N}(z_{\phi,n}|0, I)] \right\}
+  $
+
+1. **Latent Space Regularization**:
+   - **Probabilistic Framework**: In VAEs, the encoder maps input $ x $ to parameters $ \mu(x) $ and $ \sigma(x)^2 $ of a Gaussian distribution $ q_\phi(z|x) $. The latent variable $ z $ is then sampled from this distribution during training, introducing randomness and regularization.
+   - **KL Divergence**: A regularization term is added to the loss function to ensure the learned latent distribution $ q_\phi(z|x) $ is close to the prior distribution $ p(z) $ (usually a standard Gaussian). This is measured using the Kullback-Leibler (KL) divergence: $\text{KL}(q_\phi(z|x) \| p(z))$.
 
 2. **Objective Function**:
-   - **VAE**: Maximizes the ELBO, which includes both the reconstruction error and the KL divergence.
-   - **Stacked Autoencoder**: Minimizes only the reconstruction error without considering a probabilistic interpretation of the latent space.
+   - **Evidence Lower Bound (ELBO)**: The VAE objective function aims to maximize the ELBO, which balances the reconstruction accuracy and the regularization of the latent space distribution.
+     $
+     \mathcal{L}(\theta, \phi; x) = \mathbb{E}_{q_\phi(z|x)}[\ln p_\theta(x|z)] - \text{KL}(q_\phi(z|x) \| p(z))
+     $
+   - **Reconstruction Term**: The first term, $ \mathbb{E}_{q_\phi(z|x)}[\ln p_\theta(x|z)] $, ensures the reconstructed output $ \hat{x} $ is similar to the input $ x $. For continuous data, this is typically implemented using Mean Squared Error (MSE) loss: $ \mathbb{E}_{z \sim q_\phi(z|x)}[-\|x - \hat{x}\|^2] $. For binary data, binary cross-entropy loss is used: $ \mathbb{E}_{z \sim q_\phi(z|x)}[-(x \log \hat{x} + (1 - x) \log (1 - \hat{x}))] $. In case of images $ x \in \{0, 1, ..., 255\}^D $, one cannot use a normal distribution. One can take a categorical distribution $[Tomczak 2022]$:
+   $ p_\theta(x|z) = \text{Categorical}(x|\theta(z)) $ using a Neural Network (NN) for $ \theta(z) = \text{softmax}(\text{NN}(z)) $. $ p_\theta(x|z) = \text{Categorical}(x|\theta(z)) $ using a Neural Network (NN) for $ \theta(z) = \text{softmax}(\text{NN}(z)) $.
+
+   - **Regularization Term**: The KL divergence term penalizes the divergence of the latent space distribution from the prior.
 
 3. **Reconstruction Error Metric**:
-   - **VAE**: The reconstruction error is part of the ELBO and is measured as the expected log-likelihood of the data given the latent variables: $\mathbb{E}_{z \sim q_\phi(z|x)}[\ln p(x|z)]$. Typically, this is implemented using a mean squared error (MSE) loss for continuous data or a binary cross-entropy loss for binary data.
-   - **Stacked Autoencoder**: The reconstruction error is typically measured using MSE loss for continuous data, without the probabilistic framework.
+   - Measured as the expected log-likelihood of the data given the latent variables, typically using MSE for continuous data or binary cross-entropy for binary data.
 
-### Summary:
-- **Metric for VAEs**: The ELBO, which combines reconstruction error and KL divergence, is maximized.
-- **Metric for Stacked Autoencoders**: The reconstruction error (e.g., MSE) is minimized.
-- **Key Difference**: VAEs incorporate a probabilistic approach with latent space regularization through KL divergence, while stacked autoencoders focus solely on reconstructing the input data without probabilistic constraints.
+#### Stacked Autoencoders:
+1. **Latent Space Regularization**:
+   - **Deterministic Mapping**: The encoder deterministically maps input $ x $ to a latent space $ z $ without enforcing a distribution over the latent variables. There is no probabilistic interpretation or regularization.
 
+2. **Objective Function**:
+   - **Reconstruction Error**: The objective is to minimize the reconstruction error, ensuring the output $ \hat{x} $ is as close as possible to the input $ x $.
+     $
+     \mathcal{L}(x, \hat{x}) = \| x - \hat{x} \|^2
+     $
+   - There is no additional term to regularize the latent space distribution.
+
+3. **Reconstruction Error Metric**:
+   - Typically measured using Mean Squared Error (MSE) for continuous data.
+
+The key difference of metrics for reconstruction error between VAE and stacked autoencoders lies in the probabilistic framework and regularization of the latent space in VAEs, which is absent in stacked autoencoders. The probabilistic nature of VAEs allows for decomposing the error into reconstruction error, $\mathbb{E}_{q_\phi(z|x)}[\ln p_\theta(x|z)] = \sum_{n=1}^N \{ \ln \text{Categorical}(x_n | \theta(z_{\phi,n}))\} $, and KL divergence, $\text{KL}(q_\phi(z|x) \| p(z)) = \frac{1}{2} \sum_{n=1}^N \{ 1 + \ln (\sigma_{\phi,n}^2) - \mu_{\phi,n}^2 - \sigma_{\phi,n}^2 \}$, providing a more structured and interpretable latent space. In contrast, stacked autoencoders focus solely on minimizing the reconstruction error without probabilistic constraints, leading to a more deterministic latent space.
 
 ### Q3. Explore the latent space using the provided code and discuss what you observe.
+With configuration of `batch_size = 3000`, `latent_dim = 600`, `middle_dim = 300`, `learning_rate = 1e-3`, and `max_epochs = 100`, the empirical results of the latent space explorations samples of the VAE model VAE model are illustrated in Fig.7, where as the interpolations in the latent space are depicted in Fig.8.
+
+<p align="center">
+<img src="VAE_fake_reconstructed_digits_latent_dim_600_mid_dim_300_epoch_100.png" width="300" height="300">
+<br>
+<em>Fig.7: Latent vectors Sampling (VAEs) </em>
+</p>
+
+Fig.7 illustrates the latent space explorations samples of the VAE model, showing a more diversed generated digits compared to the varaibility capability of GANs indicated in Fig.6 given the same MIST dataset, capturing a more holistic distribution of the latent space owing to the probabilistic nature of the VAE model. Nontheless, fidelity and level of details in the VAE generated digits are notably less intricate compared to the ones generated by GANs, as the VAE model focuses on the reconstruction of the input data rather than the discrimiator-guided new data samples generation as in GANs.
+
+<p align="center">
+<img src="VAE_interpolate_the_latent_space_latent_dim_600_mid_dim_300_epoch_100.png" width="400" height="100">
+<br>
+<em>Fig.8: Latent vectors interpolation (VAEs) </em>
+</p>
+
+Fig.8 demonstrate a strong coherence with high-level varaitions transformation between digits `3`, `5`, `6`, and almost `0`. The variance demonstrated indicates a well-represented latent space, where the VAE model is capable of generating continously changing data with two more level of variance than the ones of GANs while maintaining a semantically meaningful and interpretable changes inter-latent vectors in the latent space.
+
 
 ### Q4. Compare the generation mechanism to GANs. You may optionally want to consider similar backbones for a fair comparison. What are the advantages and disadvantages?
 
-## Section 4.4: (Optional) Generation and Creativity
-- In this section, the goal is to create a practical generative model from scratch. Don’t hesitate to base yourself on the codes given in the previous sections. Choose a dataset of your liking, a model and train it.
-- Discuss all your design and training choices thoroughly as well as the obtained results.
+#### **Generation Mechanism:**
 
-## Discussion Points
+**Variational Autoencoders (VAEs):**
 
-## Conclusion
+1. **Probabilistic Framework:**
+   - VAEs use a probabilistic approach to model the data distribution.
+   - The encoder maps the input $ x $ to a latent space $ z $ defined by a distribution, usually a Gaussian with parameters (mean $\mu$ and variance $\sigma^2$).
+   - The latent variable $ z $ is sampled from this distribution.
+   - The decoder then reconstructs the data $ \hat{x} $ from $ z $.
+
+2. **Objective Function:**
+   - VAEs maximize the Evidence Lower Bound (ELBO), which is composed of the reconstruction term and the KL divergence term.
+     $
+     \mathcal{L}(\theta, \phi; x) = \mathbb{E}_{q_\phi(z|x)}[\ln p_\theta(x|z)] - \text{KL}(q_\phi(z|x) \| p(z))
+     $
+
+**Generative Adversarial Networks (GANs):**
+
+1. **Adversarial Framework:**
+   - GANs consist of two neural networks: a generator $ G $ and a discriminator $ D $.
+   - The generator $ G $ maps a random noise vector $ z $ to the data space, generating fake samples.
+   - The discriminator $ D $ tries to distinguish between real and fake samples.
+   - The training is a minimax game where the generator tries to fool the discriminator, and the discriminator tries to correctly identify real versus fake samples.
+
+2. **Objective Function:**
+   - The objective function for GANs involves two loss functions: one for the discriminator and one for the generator.
+   - The generator's objective function:
+     $
+     J^{(G)}(G) = -\mathbb{E}_{z \sim p_z} [\log D(G(z))]
+     $
+   - The discriminator's objective function:
+     $
+     J^{(D)}(D) = \mathbb{E}_{x \sim p_{\text{data}}} [\log D(x)] + \mathbb{E}_{z \sim p_z} [\log (1 - D(G(z)))]
+     $
+
+#### **Advantages and Disadvantages:**
+
+| Aspect | VAEs | GANs |
+| --- | --- | --- |
+| **Training Stability** | Generally more stable due to probabilistic framework. The loss function is well-defined and gradients are usually smooth. | Training can be unstable due to the adversarial nature. It often requires careful tuning of hyperparameters and may suffer from mode collapse. |
+| **Latent Space Structure** | Provides a well-defined and interpretable latent space, thanks to the regularization term (KL divergence). This leads to a smoother and more continuous latent space. | The latent space may not be as well-structured or interpretable. There is no explicit regularization enforcing a distribution over the latent space. |
+| **Sample Quality** | Generated samples might be of lower quality compared to GANs because the decoder needs to model the entire data distribution. | GANs often produce high-quality, sharp images because the generator is directly trained to fool the discriminator, which enforces realism in the samples. |
+| **Mode Coverage** | VAEs tend to cover the entire data distribution, generating diverse samples, but might be blurry. | GANs might suffer from mode collapse, where the generator produces a limited variety of samples, focusing on modes that can easily fool the discriminator. |
+| **Reconstruction Ability** | Good reconstruction ability due to the explicit reconstruction term in the loss function. | GANs do not focus on reconstruction; they focus on generating realistic samples that can fool the discriminator. |
+| **Computational Efficiency** | Training is generally computationally efficient and straightforward due to the absence of an adversarial component. | Training can be computationally intensive due to the need to optimize two networks simultaneously and the potential instability. |
