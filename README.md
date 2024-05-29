@@ -257,7 +257,7 @@ The splitting should be done randomly to ensure that both datasets are represent
 2. **Plot the Surface Associated to the Training Set**: Once the `T_new` target is constructed using your student number as weights for the different functions, you can plot the surface associated with the training set. This plot will visualize the new function that your neural network will try to approximate.
 
    <p align="center">
-   <img src="training_set_triSurface.png" width="300" height="200">
+   <img src="image/training_set_triSurface.png" width="300" height="200">
    <br>
    <em>Figure: Surface associated to the Training Set.</em>
    </p>
@@ -299,7 +299,7 @@ A set of hyperparameters was created for model selection, using the validation s
    | Validation Error      | 0.002038267906755209   |
 
    <p align="center">
-   <img src="training_validation_loss_curve.png" width="300" height="200">
+   <img src="image/training_validation_loss_curve.png" width="300" height="200">
    <br>
    <em>Figure: Training and validation loss curve.</em>
    </p>
@@ -318,13 +318,13 @@ Prediction on test set gives the Final Mean Squared Error (MSE) on the test set 
 2. **Surface Plot and Approximation**: 
    The test set surface and the approximation given by the network is visualized as follows:
       <p align="center">
-      <img src="test_set_triSurface.png" width="300" height="200">
+      <img src="image/test_set_triSurface.png" width="300" height="200">
       <br>
       <em>Figure: Surface of the test set and the approximation given by the network.</em>
       </p>
    The delta between prediction and actual value is visualized as follows:
       <p align="center">
-      <img src="delta_surface.png" width="300" height="200">
+      <img src="image/delta_surface.png" width="300" height="200">
       <br>
       <em>Figure: Delta between prediction and actual value.</em>
       </p>
@@ -353,7 +353,7 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
 1. **Attractor values**
 - **Random Inputs: Attractors vs. Targets**
    <p align="center">
-   <img src="random_inputs.png" width="300" height="200">
+   <img src="image/random_inputs.png" width="300" height="200">
    <br>
    <em>Figure: Time evolution in the state space of random input.</em>
    </p>
@@ -362,7 +362,7 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
     - In some cases, the network converges to `[-1, 1]`, which is not one of the original target patterns. This state is known as a spurious state or a false attractor, which is a byproduct of the network's dynamics. It is a result of the symmetric nature of the weights in the Hopfield network, which inherently supports both the target pattern and its inverse as stable states.
 
     <p align="center">
-    <img src="energy_convolution_random.png" width="300" height="200">
+    <img src="image/energy_convolution_random.png" width="300" height="200">
     <br>
     <em>Figure: Energy evolution of the state of random input.</em>
     </p>
@@ -370,7 +370,7 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
 - **Symmetric Inputs: Attractors vs. Targets**
 
    <p align="center">
-   <img src="symmetric_inputs.png" width="300" height="200">
+   <img src="image/symmetric_inputs.png" width="300" height="200">
    <br>
    <em>Figure: Time evolution in the state space of symmetric input.</em>
    </p>
@@ -380,7 +380,7 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
     - The network typically converges to one of the target patterns or their inverses. In the case of symmetric inputs, the convergence is to states of high symmetry, which are close to multiple attractors.
 
     <p align="center">
-    <img src="energy_convolution_symmetric.png" width="300" height="200">
+    <img src="image/energy_convolution_symmetric.png" width="300" height="200">
     <br>
     <em>Figure: Energy evolution of the state of symmetric input.</em>
     </p>
@@ -407,7 +407,7 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
 1. **Attractor values**
 - **Random Inputs: Attractors vs. Targets**
    <p align="center">
-   <img src="random_inputs_3D.png" width="300" height="200">
+   <img src="image/random_inputs_3D.png" width="300" height="200">
    <br>
    <em>Figure: Time evolution in the state space of 3D random input.</em>
    </p>
@@ -417,14 +417,14 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
     - **Variability in Convergence**: Different initial states lead to convergence to different target patterns, showcasing the network's sensitivity to initial conditions and its capacity to differentiate between distinct attractors.
 
     <p align="center">
-    <img src="energy_convolution_random_3D.png" width="300" height="200">
+    <img src="image/energy_convolution_random_3D.png" width="300" height="200">
     <br>
     <em>Figure: Energy evolution of the state of 3D random input.</em>
     </p>
 
 - **Symmetric Inputs: Attractors vs. Targets**
    <p align="center">
-   <img src="symmetric_inputs_3D.png" width="300" height="200">
+   <img src="image/symmetric_inputs_3D.png" width="300" height="200">
    <br>
    <em>Figure: Time evolution in the state space of 3D symmetric input.</em>
    </p>
@@ -433,7 +433,7 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
     - **Stability of Symmetric States**: The appearance of states like [1, 0.06045472, -0.06045472] suggests that these symmetric or near-symmetric inputs do not strongly converge to one specific target pattern but rather to a state influenced by the surrounding attractors. This is particularly notable in a high-dimensional space, where the energy landscape can be complex.
 
     <p align="center">
-    <img src="energy_convolution_symmetric_3D.png" width="300" height="200">
+    <img src="image/energy_convolution_symmetric_3D.png" width="300" height="200">
     <br>
     <em>Figure: Energy evolution of the state of 3D symmetric input.</em>
     </p>
@@ -469,7 +469,7 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
     | 10.0        | 40.0         |
 
     <p align="center">
-    <img src="digits_hopfield.png" width="300" height="200">
+    <img src="image/digits_hopfield.png" width="300" height="200">
     <br>
     <em>Figure: Hopfield digit reconstruction with noise on Iteration set to 50.</em>
     </p>
@@ -534,47 +534,47 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
         - Visualizing the learning curves, MSE values, and other relevant metrics can provide a comprehensive view of the model's performance and help in selecting the optimal hyperparameters for the MLP network.
         - **Learning Curve without Early Stopping**: 
             <p align="center">
-            <img src="MLP_training_fold_4_lag_5_H_10.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_5_H_10.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 5 lags, 10 hidden units.</em>
             </p>
             <p align="center">
-            <img src="MLP_training_fold_4_lag_5_H_25.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_5_H_25.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 5 lags, 25 hidden units.</em>
             </p>
             <p align="center">
-            <img src="MLP_training_fold_4_lag_5_H_50.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_5_H_50.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 5 lags, 25 hidden units.</em>
             </p>
             <p align="center">
-            <img src="MLP_training_fold_4_lag_10_H_5.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_10_H_5.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 10 lags, 5 hidden units.</em>
             </p>
             <p align="center">
-            <img src="MLP_training_fold_4_lag_10_H_10.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_10_H_10.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 10 lags, 10 hidden units.</em>
             </p>
             <p align="center">
-            <img src="MLP_training_fold_4_lag_10_H_25.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_10_H_25.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 10 lags, 25 hidden units.</em>
             </p>
             <p align="center">
-            <img src="MLP_training_fold_4_lag_10_H_50.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_10_H_50.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 10 lags, 50 hidden units.</em>
             </p>
             <p align="center">
-            <img src="MLP_training_fold_4_lag_15_H_25.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_15_H_25.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 15 lags, 25 hidden units.</em>
             </p>
             <p align="center">
-            <img src="MLP_training_fold_4_lag_15_H_50.png" width="400" height="150">
+            <img src="image/MLP_training_fold_4_lag_15_H_50.png" width="400" height="150">
             <br>
             <em>Figure: Loss curve: 4 validation folds, 15 lags, 50 hidden units.</em>
             </p>
@@ -598,31 +598,31 @@ Describe the regularization strategy that you used to avoid overfitting. What ot
 
     - **Lag 5 H 25: The MSE on the test set is: 3908.419**
         <p align="center">
-        <img src="predictoin_lag5_h25.png" width="400" height="150">
+        <img src="image/predictoin_lag5_h25.png" width="400" height="150">
         <br>
         <em>Figure: MLP Lag=5 H=25 prediction results on continuation of Santa Fe laser datase .</em>
         </p>
     - **Lag 5 H 50: The MSE on the test set is: 2997.659**
         <p align="center">
-        <img src="predictoin_lag5_h50.png" width="400" height="150">
+        <img src="image/predictoin_lag5_h50.png" width="400" height="150">
         <br>
         <em>Figure: MLP Lag=5 H=50 prediction results on continuation of Santa Fe laser datase .</em>
         </p>
     - **Lag 10 H 25: The MSE on the test set is: 3065.473**
         <p align="center">
-        <img src="predictoin_lag10_h25.png" width="400" height="150">
+        <img src="image/predictoin_lag10_h25.png" width="400" height="150">
         <br>
         <em>Figure: MLP Lag=10 H=25 prediction results on continuation of Santa Fe laser datase .</em>
         </p>
     - **Lag 15 H 25: The MSE on the test set is: 2940.037**
         <p align="center">
-        <img src="predictoin_lag15_h25.png" width="400" height="150">
+        <img src="image/predictoin_lag15_h25.png" width="400" height="150">
         <br>
         <em>Figure: MLP Lag=15 H=25 prediction results on continuation of Santa Fe laser datase .</em>
         </p>
     - **Lag 15 H 50: The MSE on the test set is: 6488.547**
         <p align="center">
-        <img src="predictoin_lag15_h50.png" width="400" height="150">
+        <img src="image/predictoin_lag15_h50.png" width="400" height="150">
         <br>
         <em>Figure: MLP Lag=15 H=50 prediction results on continuation of Santa Fe laser datase .</em>
         </p>
@@ -634,7 +634,7 @@ The LSTM model was implemented to predict the Santa Fe Laser dataset, and the de
     - Lag being 15 and H being 25 performs better on the cross-validatoin set among the lag set of 1, 5, 10, 15 and number of hiddent units set of 5, 10, 25, 50, with MSE on cross-valdiation being the lowest, 0.110.
     - Lag being 15 and H being 25, the MSE on the test set is: 3410.111
         <p align="center">
-        <img src="lstm_prediction.png" width="400" height="150">
+        <img src="image/lstm_prediction.png" width="400" height="150">
         <br>
         <em>Figure: LSTM Lag=15 H=25 prediction results on continuation of Santa Fe laser datase .</em>
         </p>
@@ -642,7 +642,7 @@ The LSTM model was implemented to predict the Santa Fe Laser dataset, and the de
 ### Q3. Compare the results of the recurrent MLP with the LSTM. Which model do you prefer and why?
 Both the LSTM and MLP models have been used to predict the continuation of a time series from the Santa Fe laser dataset with the same lag of 15 and number of hidden units at 25.
         <p align="center">
-        <img src="lstm_vs_mlp.png" width="400" height="150">
+        <img src="image/lstm_vs_mlp.png" width="400" height="150">
         <br>
         <em>Figure: Lag=15 H=25 LSTM vs. MLP prediction results on continuation of Santa Fe laser datase .</em>
         </p>
@@ -818,7 +818,7 @@ Overall, CNNs are well-suited for tasks involving spatial or temporal data, wher
 ### Initial CNN Architecture Test Accuracy:
 The initial CNN architecture of four layers, each input channels respectively being 1, 16, 32, and 32, as well as output channels being 16, 32, 32, 32, and kernel size starts from 3 and to 2 at the end, with padding ebing 1, provided in the script achieves a test accuracy of approximately 0.98 as indicated in below figure.  This serves as a baseline for evaluating the performance of modified architectures.
 <p align="center">
-<img src="cnn_baseline_test_acc.png" width="300" height="200">
+<img src="image/cnn_baseline_test_acc.png" width="300" height="200">
 <br>
 <em>Figure: Initial CNN Architecture Baseline Test Accuracy</em>
 </p>
@@ -861,7 +861,7 @@ In the experiment, the filter numbers of 16, 32, 64, 128, 256, kernel size of 3,
 - The modifications, such as increasing the number of filters and incorporating batch normalization, deepen the network, and the use of pooling, have led to a slight improvement in the model's performance as indiated in below figure.
 
 <p align="center">
-<img src="cnn_exp_test_acc.png" width="300" height="200">
+<img src="image/cnn_exp_test_acc.png" width="300" height="200">
 <br>
 <em>Figure: Initial CNN Architecture Baseline Test Accuracy</em>
 </p>
@@ -1003,7 +1003,7 @@ The RBM attempts to fill in the missing parts, characterized by variables `start
 To evaluate the performance of RBM, the `end_row_to_remove` was initially set to `0` for emperically determining with which `number of gibbs steps`, or `reconstruction_gibbs_steps` can the RBM reconstruct the missing parts accurately, which `number of gibbs steps` was found to be `49`.
 
 <p align="center">
-<img src="rbm_reconstruction_step49.png" width="300" height="100">
+<img src="image/rbm_reconstruction_step49.png" width="300" height="100">
 <br>
 <em>Fig.1 : Reconstructed digits with RBM gibbs steps of 49 </em>
 </p>
@@ -1019,15 +1019,15 @@ The reconstruction results are less likely to be affected if the removed section
 ### Q1. load the pre-trainned Deep Boltzmann Machine (DBM) model that is trained on the MNIST dataset. Show the filters (interconnection weights) extracted from the previously trained RBM and the DBM, what is the difference? Can you explain why the difference between filters of the first and second layer of the DBM?
 <div style="display: flex; justify-content: space-between;">
   <div style="flex: 1; text-align: center;">
-    <img src="RBM_first_100_filters.png" width="190" />
+    <img src="image/RBM_first_100_filters.png" width="190" />
     <figcaption>Fig.2 - RBM Filters</figcaption>
   </div>
   <div style="flex: 1; text-align: center;">
-    <img src="DBM_first_100_filters.png" width="200" /> 
+    <img src="image/DBM_first_100_filters.png" width="200" /> 
     <figcaption>Fig.3 - DBM First Layer Filters</figcaption>
   </div>
   <div style="flex: 1; text-align: center;">
-    <img src="DBM_second_100_filters.png" width="200" /> 
+    <img src="image/DBM_second_100_filters.png" width="200" /> 
     <figcaption>Fig.4 - DBM Second Layer Filters</figcaption>
   </div>
 </div>
@@ -1103,7 +1103,7 @@ If $D(G(z)) \approx 0$, such vanishing gradients for the generator yield the gra
 ### Q3. Discuss and illustrate the convergence and stability of GANs.
 
 <p align="center">
-<img src="GAN_loss_curve_generator_discriminator.png" width="200" height="150">
+<img src="image/GAN_loss_curve_generator_discriminator.png" width="200" height="150">
 <br>
 <em>Fig.4: GAN loss curve </em>
 </p>
@@ -1174,7 +1174,7 @@ This reveals that increment in latent dimension from `10` to `20` results in a h
 Interpolation in latent space, or discussed in the lecture as Traversing the latent space, was conducted by linearly interpolating between two latent vectors with parameter `lambda`. The generated images as illustrated in Fig.5, showing a smooth transition between number `5` and `3`. The interpolation indicates a semantically coherent and realistic morphing, or transition capability, of the generator of GAN in between latent vectors in the latent space.
 
 <p align="center">
-<img src="interpolate_the_latent_sapce.png" width="400" height="100">
+<img src="image/interpolate_the_latent_sapce.png" width="400" height="100">
 <br>
 <em>Fig.5: Latent vectors interpolation (GANs) </em>
 </p>
@@ -1182,7 +1182,7 @@ Interpolation in latent space, or discussed in the lecture as Traversing the lat
 Sampling multiple latent vectors, or discussed in the lecture as Sampling from the latent space, was conducted by randomly sampling multiple latent vectors and accordinly generating corresponding fake images. The generated images as illustrated in Fig.6, while showing the ability of generator producing relatively diverse and higher-quality samples and demostrating zero memory dependency on the training set for new image generation, latent code inference limitation of the GAN model constrained by imporsing focused on the models of the real-data distruction is inevitable indicated if compared to Variational Autoencoders (VAEs) or plain Autoencoders, which have an encoder.
 
 <p align="center">
-<img src="sample_latent_vector_from_prior_GAN_as_Generator.png" width="300" height="300">
+<img src="image/sample_latent_vector_from_prior_GAN_as_Generator.png" width="300" height="300">
 <br>
 <em>Fig.6: Latent vectors Sampling (GANs)</em>
 </p>
@@ -1297,7 +1297,7 @@ The key difference of metrics for reconstruction error between VAE and stacked a
 With configuration of `batch_size = 3000`, `latent_dim = 600`, `middle_dim = 300`, `learning_rate = 1e-3`, and `max_epochs = 100`, the empirical results of the latent space explorations samples of the VAE model VAE model are illustrated in Fig.7, where as the interpolations in the latent space are depicted in Fig.8.
 
 <p align="center">
-<img src="VAE_fake_reconstructed_digits_latent_dim_600_mid_dim_300_epoch_100.png" width="300" height="300">
+<img src="image/VAE_fake_reconstructed_digits_latent_dim_600_mid_dim_300_epoch_100.png" width="300" height="300">
 <br>
 <em>Fig.7: Latent vectors Sampling (VAEs) </em>
 </p>
@@ -1305,7 +1305,7 @@ With configuration of `batch_size = 3000`, `latent_dim = 600`, `middle_dim = 300
 Fig.7 illustrates the latent space explorations samples of the VAE model, showing a more diversed generated digits compared to the varaibility capability of GANs indicated in Fig.6 given the same MIST dataset, capturing a more holistic distribution of the latent space owing to the probabilistic nature of the VAE model. Nontheless, fidelity and level of details in the VAE generated digits are notably less intricate compared to the ones generated by GANs, as the VAE model focuses on the reconstruction of the input data rather than the discrimiator-guided new data samples generation as in GANs.
 
 <p align="center">
-<img src="VAE_interpolate_the_latent_space_latent_dim_600_mid_dim_300_epoch_100.png" width="400" height="100">
+<img src="image/VAE_interpolate_the_latent_space_latent_dim_600_mid_dim_300_epoch_100.png" width="400" height="100">
 <br>
 <em>Fig.8: Latent vectors interpolation (VAEs) </em>
 </p>
